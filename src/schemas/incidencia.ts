@@ -17,6 +17,18 @@ export const incidenciasSchema = z.object({
         20,
         'Describe el problema con al menos 20 caracteres.',
     ),
-})
+}).refine(
+  (datos) => {
+    const necesitaEquipo =
+      datos.categoria === 'Control de acceso' ||
+      datos.categoria === 'Terminal'
+
+    return !necesitaEquipo || datos.equipo.length > 0
+  },
+  {
+    message: 'Indica el equipo o puerta donde ocurre el problema.',
+    path: ['equipo'],
+  },
+)
 
 export type DatosIncidencia = z.infer<typeof incidenciasSchema>
