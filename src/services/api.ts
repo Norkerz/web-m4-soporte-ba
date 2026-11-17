@@ -1,5 +1,5 @@
 // HTTP: Query gestiona los estados, estas funciones piden o envían datos.
-import { listaIncidenciasSchema, type DatosIncidencia, type Incidencia } from '../schemas/incidencia'
+import { listaIncidenciasSchema, type DatosIncidencia, type Incidencia } from '../schemas/incidencia.ts'
 const URL_INCIDENCIAS = 'https://6af97cd36d8b86fb22d708a5.mockapi.io/incidencias'
 export async function obtenerIncidencias(signal?: AbortSignal): Promise<Incidencia[]> {
   const respuesta = await fetch(URL_INCIDENCIAS, { signal })
