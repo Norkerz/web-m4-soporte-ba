@@ -84,10 +84,6 @@ Antes de entregar:
 
 ## Uso de IA
 Se utilizó **Codex (OpenAI)** para orientar y generar código y explicaciones.
-Prompts reales relevantes:
-> «Ya continuemos, dime paso a paso como conectamos React con la API y explicame que hace cada cosa»
-
-> «Ya continuemos con lo que nos falta del codigo, pero quiero que lo hagas todo edita mi proyecto y luego vemos que cambios pasaron, recuerda hacer los commits restantes»
 
 El alumno eligió la temática Biometría Aplicada, proporcionó el logo, configuró MockAPI, creó la plantilla y escribió manualmente siguiendo indicaciones los primeros bloques de API, QueryClientProvider, consulta, esquema y formulario. Hizo los dos primeros commits y comunicó su subida a GitHub.
 ## Autopsia
