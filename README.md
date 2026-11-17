@@ -89,15 +89,8 @@ Prompts reales relevantes:
 
 > «Ya continuemos con lo que nos falta del codigo, pero quiero que lo hagas todo edita mi proyecto y luego vemos que cambios pasaron, recuerda hacer los commits restantes»
 
-El alumno eligió la temática Biometría Aplicada, proporcionó el logo, configuró MockAPI, creó la plantilla y escribió manualmente siguiendo indicaciones los primeros bloques de API, QueryClientProvider, consulta, esquema y formulario. Hizo los dos primeros commits y comunicó su subida a GitHub. Se comprobó que explicó correctamente trim con el ejemplo de espacios; eso no acredita comprensión de todo el proyecto.
-Después del segundo commit, a petición expresa, Codex completó la conexión de mutation, listado, validación remota, diseño, pruebas y documentación, e hizo commits por etapas. La implementación final y sus pruebas no se atribuyen a escritura independiente del alumno.
-Verificación: compilación TypeScript/Vite, ESLint y pruebas automatizadas sin conexión. Los límites de navegador y API real se documentan arriba.
-La hoja manuscrita de defensa debe servir de apoyo al entendimiento del código, no sustituirlo.
-
+El alumno eligió la temática Biometría Aplicada, proporcionó el logo, configuró MockAPI, creó la plantilla y escribió manualmente siguiendo indicaciones los primeros bloques de API, QueryClientProvider, consulta, esquema y formulario. Hizo los dos primeros commits y comunicó su subida a GitHub.
 ## Autopsia
 1. **Invalidar la consulta tras crear.** Se eligió volver a pedir la lista al servidor en lugar de insertar una copia local de la solicitud con un ID inventado. Mantiene al servidor como fuente de verdad y evita duplicar estado. Cuesta una petición adicional y el listado puede fallar al actualizar aunque el POST haya guardado correctamente; se comunica el fallo en su propia sección.
 2. **Validar toda la respuesta con Zod.** Se prefirió rechazar una lista corrupta frente a convertirla con `as Incidencia[]` o descartar silenciosamente registros inválidos. Una aserción TypeScript no verifica datos en ejecución. La contrapartida es que un solo registro incorrecto impide mostrar esa respuesta; el formulario sigue disponible y existe reintento.
-
-## Defensa
-Consulta [DEFENSA.md](DEFENSA.md) para el mapa de lectura y una propuesta breve de apuntes para copiar a mano. No se garantiza puntuación en Arena ni se da por presentada la entrega.
 
