@@ -1,4 +1,6 @@
 import { useForm } from 'react-hook-form'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { crearIncidencia } from '../services/api'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
   incidenciasSchema,
@@ -9,6 +11,7 @@ function FormularioIncidencia() {
     const{
         register,
         handleSubmit,
+        reset,
         formState: { errors },
     } = useForm<DatosIncidencia> ({
         resolver: zodResolver(incidenciasSchema),
@@ -24,13 +27,26 @@ function FormularioIncidencia() {
         },
     })
 
-    function comprobarDatos(datos: DatosIncidencia){
-        console.log('Datos validos:', datos)
+    const queryClient = useQueryClient()
+    const envio = useMutation({
+        mutationFn: crearIncidencia,
+        networkMode: 'always',
+        onSuccess: async () => {
+            reset()
+            await queryClient.invalidateQueries({ queryKey: ['incidencias'] })
+        },
+    })
+
+    function enviarDatos(datos: DatosIncidencia){
+        if (!envio.isPending) envio.mutate(datos)
     }
 
     return(
-        <form onSubmit={handleSubmit(comprobarDatos)} noValidate>
+        <form onSubmit={handleSubmit(enviarDatos)} noValidate
+          onChange={() => { if (envio.isSuccess || envio.isError) envio.reset() }}>
             <h2>Nueva incidencia</h2>
+            <fieldset disabled={envio.isPending}>
+            <legend>Datos de la solicitud</legend>
 
             <label htmlFor="nombre">Nombre</label>
         <input
@@ -124,7 +140,12 @@ function FormularioIncidencia() {
           {errors.descripcion.message}
         </p>
       )}
-      <button type="submit">Comprobar datos</button>
+      <button type="submit" disabled={envio.isPending}>
+        {envio.isPending ? 'Enviando...' : 'Enviar incidencia'}
+      </button>
+      </fieldset>
+      {envio.isError && <p role="alert">{envio.error.message} Tus datos se conservan para reintentar.</p>}
+      {envio.isSuccess && <p role="status">Incidencia registrada correctamente.</p>}
     </form>
     )
 }
